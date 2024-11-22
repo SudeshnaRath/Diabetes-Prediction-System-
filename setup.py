@@ -3,7 +3,6 @@ import streamlit as st
 from streamlit_option_menu import option_menu
 
 #loading the saved models
-
 diabetes_model = pickle.load(open("/Users/emily/Downloads/catboost_model.pkl", 'rb'))
 
 #sidebar for navigate
