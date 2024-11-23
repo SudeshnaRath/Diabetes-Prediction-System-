@@ -1,0 +1,62 @@
+import pickle
+import streamlit as st
+from streamlit_option_menu import option_menu
+
+
+# loading the saved models as saved in the current folder and copy that path
+diabetes_model = pickle.load(open('C:/Users/siddhardhan/Desktop/Multiple Disease Prediction System/saved models/diabetes_model.sav', 'rb'))
+
+# sidebar for navigation
+with st.sidebar:
+    
+    selected = option_menu('Diabetes Prediction System',
+                          
+                          ['Diabetes Prediction']
+                          icons=['activity'],
+                          default_index=0)
+    
+    
+# Diabetes Prediction Page
+if (selected == 'Diabetes Prediction'):
+    
+    # page title
+    st.title('Diabetes Prediction using ML')
+    
+    
+    # getting the input data from the user
+    col1, col2, col3 = st.columns(3)
+    
+    with col1:
+        age = st.text_input('Enter your age-' )
+        
+    with col2:
+        hypertension = st.text_input('Do you have Hypertension(put 0 for no and 1 for yes)-')
+    
+    with col3:
+        heart_disease = st.text_input('Do you have Heart Disease? (put 0 for no and 1 for yes)-')
+    
+    with col1:
+        hba1c_level = st.text_input('Enter your HbA1c level- ')
+    
+    with col2:
+        blood_glucose_level = st.text_input('Enter your blood_glucose_level- ')
+    
+    with col3:
+        bmi = st.text_input('Enter your BMI value- ')
+    
+    
+    
+    # code for Prediction
+    diab_diagnosis = ''
+    
+    # creating a button for Prediction
+    
+    if st.button('Diabetes Test Result'):
+        diab_prediction = diabetes_model.predict([[age, hypertension, heart_disease, hba1c_level, blood_glucose_level, bmi]])
+        
+        if (diab_prediction[0] == 1):
+          diab_diagnosis = 'The person is diabetic'
+        else:
+          diab_diagnosis = 'The person is not diabetic'
+        
+    st.success(diab_diagnosis)
